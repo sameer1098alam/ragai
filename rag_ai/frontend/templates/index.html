@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ask AI</title>
+  <link rel="stylesheet" href="/static/ask.css" />
+</head>
+<body>
+    <div class="site-header">
+        <span></span>RAG-AI Uploader by Auro</span>
+        <div class="center-buttons">
+            <a class="nav-link" href="/ask"> Upload</a>
+            <a class="nav-link" href="/login">Signup/ Login</a>
+        </div>
+    </div>
+
+    <div class="container">
+      <h1 class="header">Ask Anything</h1>
+  
+      <div class="search-box">
+          <input type="text" id="query" placeholder="What do you want to know?" autofocus />
+          <button onclick="askQuestion()">🔍</button>
+      </div>
+  
+      <div id="videos" class="videos-box">
+          <!-- YouTube videos will appear here -->
+      </div>
+  </div>
+  
+
+  <script>
+    function askQuestion() {
+      const query = document.getElementById("query").value;
+
+      // Send a POST request to the backend to fetch YouTube videos
+      fetch('/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `query=${encodeURIComponent(query)}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        const videosBox = document.getElementById("videos");
+        videosBox.innerHTML = "";  // Clear previous results
+
+        if (data.videos.length > 0) {
+          data.videos.forEach(video => {
+            const videoElement = document.createElement("div");
+            videoElement.style.marginBottom = '20px';
+            
+            videoElement.innerHTML = `
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <img src="${video.thumbnail}" alt="Thumbnail" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+                <div>
+                  <h4 style="margin: 0;">${video.title}</h4>
+                  <p style="margin: 5px 0;">${video.description}</p>
+                  <a href="${video.url}" target="_blank" style="color: #007bff; text-decoration: none;">Watch on YouTube</a>
+                </div>
+              </div>
+            `;
+
+            videosBox.appendChild(videoElement);
+          });
+        } else {
+          videosBox.innerHTML = "<p>No videos found for this query.</p>";
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>

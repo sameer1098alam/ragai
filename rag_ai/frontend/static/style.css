@@ -1,0 +1,329 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f1a;
+    color: #fff;
+    background-image: radial-gradient(#222 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: bgMove 60s linear infinite;
+  }
+  
+  @keyframes bgMove {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+  }
+  
+  .overlay {
+    max-width: 500px;
+    margin: 100px auto;
+    background: #1b1c2a;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  form input[type="text"],
+  form input[type="file"],
+  form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    background: #2a2c3d;
+    color: white;
+  }
+  
+  form textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  button {
+    background: #a855f7;
+    border: none;
+    color: white;
+    padding: 14px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  button:hover {
+    background: #9333ea;
+  }
+  
+  .alert {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .alert.success {
+    background-color: #0d4220;
+    color: #a0f1c0;
+  }
+  
+  .alert.error {
+    background-color: #441414;
+    color: #fda4af;
+  }
+  
+/* General Body Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0f0f1a;
+    color: #fff;
+    background-image: radial-gradient(#222 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: bgMove 60s linear infinite;
+  }
+  
+  @keyframes bgMove {
+    from { background-position: 0 0; }
+    to { background-position: 1000px 1000px; }
+  }
+  
+  /* Overlay for the upload section */
+  .overlay {
+    max-width: 500px;
+    margin: 100px auto;
+    background: #1b1c2a;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+    text-align: center;
+  }
+  
+  /* Header Styling */
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    padding: 15px 20px;
+    background-color: #1b1b2c; /* Add background color */
+    color: #a855f7; /* Text color */
+    position: fixed; /* Make the header fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  
+  .site-header span {
+    font-weight: bold;
+  }
+  
+  /* Navigation links */
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Increased gap */
+  }
+  
+  .nav-link {
+    font-size: 16px;
+    text-decoration: none;
+    color: #a855f7;
+    background-color: #1b1b2c;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: #2d2d40;
+  }
+  
+  /* Container for the main content */
+  .container {
+    margin-top: 80px; /* Add margin top to make space for the fixed header */
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    background-color: #1e1e2f;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(145, 92, 182, 0.4);
+  }
+  
+  /* Header inside the container */
+  .header {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ff4dd2;
+  }
+  
+  /* Search box styles */
+  .search-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  input[type="text"] {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    width: 70%;
+    background-color: #2e2e3e;
+    color: #f1f1f1;
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #a142f4;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  button:hover {
+    background-color: #7e2fcf;
+  }
+  
+  .answer-box {
+    margin-top: 25px;
+    background-color: #2a2a3d;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 100px;
+    text-align: left;
+    color: #e1e1e1;
+    line-height: 1.6;
+  }
+  
+  /* Footer or other sections */
+  .footer {
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    color: #a855f7;
+  }
+  #resources-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #2a2a3d;
+    border-radius: 8px;
+    color: #e1e1e1;
+    text-align: left;
+  }
+  
+  #resources-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ff4dd2;
+  }
+  
+  #resources-box a {
+    color: #a855f7;
+    text-decoration: none;
+  }
+  
+  #resources-box a:hover {
+    text-decoration: underline;
+  }
+  body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f0f1a;
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 600px;
+  background-color: #1e1e2f;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(145, 92, 182, 0.4);
+}
+
+.header {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #ff4dd2;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+input[type="text"] {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  width: 70%;
+  background-color: #2e2e3e;
+  color: #f1f1f1;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #a142f4;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #7e2fcf;
+}
+
+.videos-box {
+  margin-top: 25px;
+  background-color: #2a2a3d;
+  padding: 20px;
+  border-radius: 10px;
+  min-height: 100px;
+  text-align: left;
+  color: #e1e1e1;
+  line-height: 1.6;
+}
+
+.videos-box div {
+  padding: 10px;
+  background-color: #3a3a4d;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.videos-box h4 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.videos-box p {
+  font-size: 14px;
+  margin: 5px 0;
+}

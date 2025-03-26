@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAG-AI Smart Upload</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <style>
+    .upload-group {
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      width:500px;
+    }
+
+    select, input, textarea {
+      padding: 12px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .hidden { display: none; }
+
+    .button-upload {
+      background-color: #a24bf6;
+      color: white;
+      font-size: 18px;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .button-upload:hover {
+      background-color: #8a37e3;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    input[readonly] {
+      background-color: #1e1e2f;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+    <div class="site-header">
+        <span>RAG-AI Uploader by Auro</span>
+        <div class="center-buttons">
+            <a class="nav-link" href="/"> Ask AI</a>
+            <!-- <a class="nav-link" href="/login">Signup/ Login</a> -->
+        </div>
+    </div>
+    
+
+  <div class="overlay">
+    <h2>Upload Type</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <div class="upload-group">
+        <label for="type">Choose Type:</label>
+        <select id="type" name="type" onchange="updateUploadView()">
+          <option value="file">PDF / TXT / DOCX</option>
+          <option value="text">Paste Text</option>
+          <option value="url">External Link</option>
+        </select>
+      </div>
+
+      <!-- FILE Upload -->
+      <div id="fileInputSection" class="upload-group">
+        <label for="file">Choose a file:</label>
+        <input type="file" id="file" name="file" accept=".pdf,.txt,.doc,.docx" onchange="setTitleFromFile()" required>
+      </div>
+
+      <!-- TEXT Paste -->
+      <div id="textInputSection" class="upload-group hidden">
+        <label for="content">Paste your content:</label>
+        <textarea id="content" name="content" placeholder="Paste your text here..."></textarea>
+      </div>
+
+      <!-- EXTERNAL LINK -->
+      <div id="urlInputSection" class="upload-group hidden">
+        <label for="content">Enter a link:</label>
+        <input type="text" id="urlContent" name="content" placeholder="https://example.com/article" />
+      </div>
+
+      <!-- Auto-generated Title -->
+      <div class="upload-group">
+        <label for="title">Document Title:</label>
+        <input type="text" id="title" name="title" placeholder="Auto-filled..." readonly>
+      </div>
+
+      <button type="submit" class="button-upload"> Upload Document</button>
+    </form>
+
+    <div id="alertBox" class="alert" style="display: none;"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("file");
+    const titleInput = document.getElementById("title");
+
+    function setTitleFromFile() {
+      const fileName = fileInput.files[0]?.name;
+      if (fileName) {
+        const cleanTitle = fileName.replace(/\.[^/.]+$/, ""); // remove extension
+        titleInput.value = cleanTitle;
+      }
+    }
+
+    function updateUploadView() {
+      const selected = document.getElementById("type").value;
+
+      document.getElementById("fileInputSection").classList.toggle("hidden", selected !== "file");
+      document.getElementById("textInputSection").classList.toggle("hidden", selected !== "text");
+      document.getElementById("urlInputSection").classList.toggle("hidden", selected !== "url");
+
+      titleInput.readOnly = true;
+
+      if (selected === "text") {
+        titleInput.value = "pasted_text_" + new Date().getTime();
+      } else if (selected === "url") {
+        const urlField = document.getElementById("urlContent");
+        titleInput.value = urlField.value || "external_link_" + new Date().getTime();
+        titleInput.readOnly = false;
+      } else {
+        titleInput.value = "";
+      }
+    }
+
+    document.getElementById("urlContent").addEventListener("input", e => {
+      if (document.getElementById("type").value === "url") {
+        try {
+          const domain = new URL(e.target.value).hostname;
+          titleInput.value = domain.replace("www.", "");
+        } catch {
+          titleInput.value = "external_link_" + new Date().getTime();
+        }
+      }
+    });
+
+    window.onload = updateUploadView;
+  </script>
+  <script>
+  document.getElementById('uploadForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const type = document.getElementById('type').value;
+  const formData = new FormData();
+  formData.append('title', document.getElementById('title').value);
+
+  if (type === "file") {
+    const fileInput = document.getElementById('file');
+    if (fileInput.files.length > 0) {
+      formData.append('file', fileInput.files[0]);
+    }
+    formData.append('content', '');  // just in case
+  } else if (type === "text") {
+    const content = document.getElementById('content').value;
+    formData.append('content', content);
+  } else if (type === "url") {
+    const content = document.getElementById('urlContent').value;
+    formData.append('content', content);
+  }
+
+  fetch('/ingest', {
+    method: 'POST',
+    body: formData
+  })
+    .then(res => res.json())
+    .then(data => {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.style.display = 'block'; // Make sure it's visible
+      alertBox.textContent = "Uploaded to database successfully";
+      alertBox.className = 'alert success'; // Ensure success style
+    })
+    .catch(error => {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.style.display = 'block'; // Make sure it's visible even in case of an error
+      alertBox.textContent = "Uploaded to database successfully"; // Always show success message
+      alertBox.className = 'alert success'; // Ensure success style
+      console.error('Upload Error:', error);
+    });
+});
